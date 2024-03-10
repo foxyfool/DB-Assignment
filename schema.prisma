@@ -1,0 +1,47 @@
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  desc        String
+  SKU         String
+  category    Category  @relation(fields: [category_id], references: [id])
+  category_id Int
+  inventory   Inventory @relation(fields: [inventory_id], references: [id])
+  inventory_id Int
+  price       Float
+  discount    Discount? @relation(fields: [discount_id], references: [id])
+  discount_id Int?
+  created_at  DateTime
+  modified_at DateTime
+  deleted_at  DateTime
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  desc        String
+  created_at  DateTime
+  modified_at DateTime
+  deleted_at  DateTime
+  products    Product[] //  access all products associated with a particular Category
+}
+
+model Inventory {
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  created_at  DateTime
+  modified_at DateTime
+  deleted_at  DateTime
+  products    Product[] //  access all products associated with a particular Inventory
+}
+
+model Discount {
+  id                Int       @id @default(autoincrement())
+  name              String
+  desc              String
+  discount_percent  Float
+  active            Boolean
+  created_at        DateTime
+  modified_at       DateTime
+  deleted_at        DateTime
+  products          Product[] //  access all products associated with a particular Discount
+}
